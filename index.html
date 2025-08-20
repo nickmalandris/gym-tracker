@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Tracker - Progressive Overload</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Fitness Tracker">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💪 Fitness Tracker</h1>
+            <p>Track your progressive overload</p>
+        </header>
+
+        <!-- Tab Navigation -->
+        <nav class="tab-navigation">
+            <button class="tab-btn active" data-tab="history">📊 Session History</button>
+            <button class="tab-btn" data-tab="charts">📈 Progress Charts</button>
+            <button class="tab-btn" data-tab="workout">💪 Workout</button>
+        </nav>
+
+        <main>
+            <!-- Session History Page -->
+            <div id="historyPage" class="tab-page active">
+                <section class="session-history">
+                    <h2>Session History</h2>
+                    <div class="session-filters">
+                        <select id="sessionFilter">
+                            <option value="">All Sessions</option>
+                            <option value="7">Last 7 days</option>
+                            <option value="30">Last 30 days</option>
+                            <option value="90">Last 90 days</option>
+                        </select>
+                    </div>
+                    <div id="sessionHistoryList"></div>
+                </section>
+            </div>
+
+            <!-- Progress Charts Page -->
+            <div id="chartsPage" class="tab-page">
+                <section class="progress-charts">
+                    <h2>Progressive Overload Chart</h2>
+                    <div class="chart-controls">
+                        <select id="chartExercise">
+                            <option value="">Select Exercise</option>
+                        </select>
+                        <select id="chartMetric">
+                            <option value="maxWeight">Max Weight</option>
+                            <option value="totalVolume">Total Volume</option>
+                            <option value="progressiveOverload">Progressive Overload</option>
+                        </select>
+                    </div>
+                    <canvas id="progressChart" width="400" height="200"></canvas>
+                </section>
+            </div>
+
+            <!-- Workout Page -->
+            <div id="workoutPage" class="tab-page">
+                <!-- Session Control Panel -->
+                <section class="session-control">
+                    <h2>Workout Session</h2>
+                    <div id="sessionStatus" class="session-inactive">
+                        <div class="session-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="bodyWeight">Body Weight (kg):</label>
+                                    <input type="number" id="bodyWeight" min="0" step="0.1" placeholder="70">
+                                </div>
+                                <div class="form-group">
+                                    <label for="sessionStartTime">Start Time:</label>
+                                    <input type="datetime-local" id="sessionStartTime" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="sessionEndTime">End Time:</label>
+                                    <input type="datetime-local" id="sessionEndTime">
+                                </div>
+                            </div>
+                            <button id="startSessionBtn" class="start-btn">Start Workout</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Exercise Selection and Set Tracking -->
+                <section class="exercise-tracking" id="exerciseSection" style="display: none;">
+                    <h2>Add Exercise</h2>
+                    <div class="exercise-selection">
+                        <div class="form-group">
+                            <label for="exerciseSelect">Select Exercise:</label>
+                            <select id="exerciseSelect">
+                                <option value="">Choose an exercise...</option>
+                                <option value="Bench Press">Bench Press</option>
+                                <option value="Squat">Squat</option>
+                                <option value="Deadlift">Deadlift</option>
+                                <option value="Overhead Press">Overhead Press</option>
+                                <option value="Barbell Row">Barbell Row</option>
+                                <option value="Pull-ups">Pull-ups</option>
+                                <option value="Dips">Dips</option>
+                                <option value="Incline Bench Press">Incline Bench Press</option>
+                                <option value="Romanian Deadlift">Romanian Deadlift</option>
+                                <option value="Lat Pulldown">Lat Pulldown</option>
+                            </select>
+                            <input type="text" id="customExercise" placeholder="Or enter custom exercise..." style="margin-top: 10px;">
+                        </div>
+                        <button id="addExerciseBtn">Add Exercise to Session</button>
+                    </div>
+
+                    <div id="currentExercises"></div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
